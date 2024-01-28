@@ -1,8 +1,10 @@
 
 -- Define a function to execute when an action is completed
 deezAction = 0
+apmCOUNT= 0
+
 function ondeezActionCompleted()
-    -- print("Action completed! - ",deezAction)
+    print("Action completed! - ",deezAction)
     -- Add your logic here
     deezAction = deezAction +1
 end
@@ -25,7 +27,15 @@ attachEventListeners()
 
 local function printMessage()
     print("APM - ",deezAction)
+    apmCOUNT = deezAction
     deezAction = 0
+
+
+--printMessage
+    local my_extension = { sections = { lualine_a = {'vimAPM'} }, filetypes = {'lua'} }
+
+    require('lualine').setup { extensions = { my_extension } }
+    require('lualine').refresh()
 end
 
 -- Define a timer to print the message every minute
@@ -36,4 +46,14 @@ local function setupTimer()
 end
 
 -- Call the setup function when Neovim starts
+--
+print("setting up timer for apm")
 setupTimer()
+
+
+
+-- lualine
+local function setAPMinLuaLine()
+  return apmCOUNT  
+end
+
